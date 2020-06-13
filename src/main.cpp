@@ -6,10 +6,13 @@
 #include "easyline.h"
 
 
+// Empirically determined via Python on an Intel Core i5 processor.
+// factorial(21) overflows the unsigned long long type (64 bits)
+constexpr ullong MAX_NUM = 20;
+
 void usage( const char* prog_name ) {
-   ullong max_num = find_max_factorial_for_ullong();
    std::cout << "Usage: " << prog_name << " <num values>\n";
-   std::cout << "Num_values must be less than " << max_num << "\n";
+   std::cout << "Num_values must be less than " << MAX_NUM << "\n";
    std::cout << "Otherwise, the result will overflow.\n";
    std::cout << "\n";
 }
@@ -19,7 +22,8 @@ int main( int argc, char** argv ) {
    ullong num = 2;
    std::ostringstream err_msg_stream( std::ostringstream::ate );
 
-   ullong max_num = find_max_factorial_for_ullong();
+   // Empirically determined on x86
+   ullong max_num = 20;
 
    try {
       if ( argc > 1 ) {
@@ -30,7 +34,7 @@ int main( int argc, char** argv ) {
             err_msg_stream << "Invalid input: " << argv[1];
             throw std::invalid_argument( err_msg_stream.str() );
          }
-         if ( num > max_num ) {
+         if ( num > MAX_NUM ) {
             err_msg_stream << "Input out of range for this platform: " << argv[1];
             throw std::invalid_argument( err_msg_stream.str() );
          }
