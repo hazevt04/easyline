@@ -1,28 +1,24 @@
 // C++ File for easyline
 
-#include <climits>
-
 #include "utils.h"
-#include "factorial.h"
+#include <gmpxx.h>
 #include "easyline.h"
 
-
-ullong easyline( const ullong num, const bool debug = false ) {
+mpz_class easyline( const mpz_class num, const bool debug = false ) {
    if ( num == 0 ) {
       return 1;
    } else {
-      ullong sum = 1;
-      ullong fact_n = factorial( num );
+      mpz_class sum = 1;
+      mpz_class fact_n = factorial( num );
 
-      for( ullong index = 1; index < num; ++index ) {
-         ullong fact_i = factorial( index );
-         ullong fact_n_minus_i = factorial( num - index );
-         ullong temp = fact_n / ( fact_i * fact_n_minus_i );
+      for( mpz_class index = 1; index < num; ++index ) {
+         mpz_class fact_i = factorial( index );
+         mpz_class fact_n_minus_i = factorial( num - index );
+         mpz_class temp = fact_n / ( fact_i * fact_n_minus_i );
          sum += temp * temp;
       }
       return sum + 1;
   }
 }
-
 
 // end of C++ file for easyline
